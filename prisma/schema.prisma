@@ -1,0 +1,158 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum GenderCategory {
+  PRIA
+  WANITA
+  PASANGAN
+  ANAK
+}
+
+enum UnitSize {
+  S
+  M
+  L
+  XL
+  ALL_SIZE
+}
+
+enum UnitCondition {
+  EXCELLENT
+  GOOD
+  IN_REPAIR
+}
+
+enum RentalStatus {
+  PENDING_DP
+  CONFIRMED
+  ACTIVE_RENTED
+  RETURNED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
+  DP_PAID
+  PAID_FULL
+  REFUNDED
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  region      String    // e.g. "Sumatera", "Jawa", "Bali & NT", "Sulawesi", "Kalimantan", "Papua"
+  slug        String    @unique
+  description String?
+  costumes    Costume[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Costume {
+  id                  String         @id @default(cuid())
+  title               String
+  slug                String         @unique
+  culturalOrigin      String         // e.g. "Minangkabau, Sumatera Barat"
+  description         String
+  category            GenderCategory
+  pricePerPeriod      Int            // Harga sewa paket (standar 3 hari) dalam Rupiah
+  securityDeposit     Int            // Uang jaminan sewa dalam Rupiah
+  images              String[]       // URL atau path foto produk
+  includedAccessories String[]       // Daftar aksesoris lengkap bawaan
+  isFeatured          Boolean        @default(false)
+  isActive            Boolean        @default(true)
+  categoryId          String
+  categoryRel         Category       @relation(fields: [categoryId], references: [id])
+  units               CostumeUnit[]
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  @@index([categoryId])
+  @@index([category])
+  @@index([slug])
+}
+
+model CostumeUnit {
+  id              String        @id @default(cuid())
+  unitCode        String        @unique // e.g. "MNG-01-M-A"
+  size            UnitSize
+  conditionStatus UnitCondition @default(EXCELLENT)
+  notes           String?
+  costumeId       String
+  costume         Costume       @relation(fields: [costumeId], references: [id], onDelete: Cascade)
+  rentalItems     RentalItem[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([costumeId, size])
+}
+
+model Customer {
+  id            String        @id @default(cuid())
+  fullName      String
+  phoneWhatsApp String
+  email         String?
+  address       String
+  idCardNumber  String?       // No KTP untuk verifikasi sewa (opsional)
+  orders        RentalOrder[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([phoneWhatsApp])
+}
+
+model RentalOrder {
+  id               String        @id @default(cuid())
+  bookingCode      String        @unique // e.g. "SEWA-202610-ABCD"
+  customerId       String
+  customer         Customer      @relation(fields: [customerId], references: [id])
+  startDate        DateTime      // Tanggal mulai sewa (penjemputan/pengiriman)
+  endDate          DateTime      // Tanggal rencana kembali
+  bufferEndDate    DateTime      // endDate + 1 hari untuk jadwal laundry/maintenance
+  actualReturnDate DateTime?     // Tanggal pengembalian riil oleh penyewa
+  rentalFee        Int           // Biaya sewa
+  securityDeposit  Int           // Uang jaminan
+  totalAmount      Int           // rentalFee + securityDeposit
+  paymentStatus    PaymentStatus @default(UNPAID)
+  rentalStatus     RentalStatus  @default(PENDING_DP)
+  customerNotes    String?
+  adminNotes       String?
+  items            RentalItem[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([bookingCode])
+  @@index([startDate, bufferEndDate])
+  @@index([rentalStatus])
+}
+
+model RentalItem {
+  id            String      @id @default(cuid())
+  orderId       String
+  order         RentalOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  costumeUnitId String
+  costumeUnit   CostumeUnit @relation(fields: [costumeUnitId], references: [id])
+  priceSnapshot Int
+
+  @@index([orderId])
+  @@index([costumeUnitId])
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String   // Hashed password
+  fullName  String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
