@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { COSTUMES, CATEGORIES } from "@/lib/data/mock-costumes";
 import { ProductCard } from "@/components/catalog/ProductCard";
+import { getActiveWebsiteImage } from "@/lib/website-images";
+import { getSiteConfig } from "@/lib/config";
 import {
   Sparkles,
   ShieldCheck,
@@ -11,9 +13,17 @@ import {
   Sparkle,
   Layers,
   Compass,
+  MessageCircle,
 } from "lucide-react";
 
-export default function HomePage() {
+// Halaman beranda dirender ulang setiap request sehingga gambar Hero yang
+// diubah melalui admin "Website Images" langsung tampil tanpa harus
+// rebuild/redeploy aplikasi.
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const heroImage = await getActiveWebsiteImage("HERO");
+  const siteConfig = getSiteConfig();
   const featuredCostumes = COSTUMES.filter((c) => c.isFeatured);
 
   return (
@@ -30,16 +40,16 @@ export default function HomePage() {
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cream-200/80 border border-gold/40 text-xs font-medium text-gold-deep">
                 <Sparkles className="w-3.5 h-3.5 text-gold" />
-                <span>Penyewaan Baju Adat Nusantara Terpercaya</span>
+                <span>Penyewaan Baju Bodo Adat Bugis Terpercaya</span>
               </div>
 
               <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold text-umber leading-[1.15] tracking-tight">
-                Kemegahan Busana Adat Nusantara untuk Momen Paling Berharga
+                Kemegahan Baju Bodo Adat Bugis untuk Momen Paling Berharga
               </h1>
 
               <p className="text-sm sm:text-base text-taupe leading-relaxed max-w-xl">
-                Hadirkan aura keagungan warisan leluhur pada pernikahan, wisuda, upacara adat,
-                dan sesi foto sakral Anda. Koleksi autentik dari Sabang sampai Merauke, higienis,
+                Hadirkan aura keagungan warisan leluhur Bugis-Makassar pada pernikahan, wisuda,
+                upacara adat, dan sesi foto sakral Anda. Koleksi Baju Bodo autentik, higienis,
                 dan dilengkapi aksesoris adat lengkap siap pakai.
               </p>
 
@@ -94,8 +104,8 @@ export default function HomePage() {
             <div className="lg:col-span-5 relative">
               <div className="relative mx-auto max-w-md aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border-4 border-ivory">
                 <Image
-                  src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=1000&auto=format&fit=crop"
-                  alt="Busana Pengantin Adat Minangkabau Suntiang Emas"
+                  src={heroImage?.url ?? "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?q=80&w=1000&auto=format&fit=crop"}
+                  alt={heroImage?.name ?? "Baju Bodo Adat Bugis"}
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -133,13 +143,13 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
           <span className="text-xs font-semibold uppercase tracking-widest text-gold-deep">
-            Jelajah Budaya
+            Jelajah Koleksi
           </span>
           <h2 className="font-serif text-2xl sm:text-4xl font-bold text-umber">
-            Kekayaan Busana dari Berbagai Penjuru Nusantara
+            Kekayaan Busana Adat dari Berbagai Daerah Indonesia
           </h2>
           <p className="text-xs sm:text-sm text-taupe leading-relaxed">
-            Setiap helai kain menyimpan filosofi luhur dan doa restu. Temukan busana adat khas daerah asal atau impian Anda.
+            Setiap helai kain menyimpan filosofi luhur dan doa restu. Temukan pakaian adat khas daerah asal atau impian Anda.
           </p>
         </div>
 
@@ -172,7 +182,7 @@ export default function HomePage() {
               Rekomendasi Terbaik
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-umber mt-1">
-              Koleksi Busana Adat Favorit
+              Koleksi Baju Bodo & Adat Favorit
             </h2>
           </div>
           <Link
@@ -199,7 +209,7 @@ export default function HomePage() {
               Keunggulan Layanan
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-umber">
-              Mengapa Memilih Sewa Adat Nusantara?
+              Mengapa Memilih Sewa Baju Bodo?
             </h2>
           </div>
 
@@ -328,14 +338,27 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-            <a
-              href="https://wa.me/6281234567890?text=Halo%20Admin%20Sewa%20Adat%20Nusantara,%20saya%20ingin%20konsultasi%20baju%20adat%20dan%20fitting"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-dark text-ivory-50 px-6 py-3.5 rounded-xl font-semibold text-xs tracking-wide shadow-md transition-colors"
-            >
-              Hubungi Admin WhatsApp
-            </a>
+            {siteConfig.whatsappNumber ? (
+              <a
+                href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
+                  "Halo Admin, saya ingin konsultasi pakaian adat dan fitting"
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1EBE5D] text-white py-3.5 px-6 rounded-xl font-semibold text-xs tracking-wide shadow-md transition-colors"
+              >
+                <MessageCircle className="w-4 h-4" />
+                Hubungi Admin WhatsApp
+              </a>
+            ) : (
+              <button
+                disabled
+                className="inline-flex items-center justify-center gap-2 bg-[#25D366]/40 text-white py-3.5 px-6 rounded-xl font-semibold text-xs tracking-wide shadow-md"
+              >
+                <MessageCircle className="w-4 h-4" />
+                Hubungi Admin WhatsApp
+              </button>
+            )}
           </div>
         </div>
       </section>

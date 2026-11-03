@@ -5,6 +5,7 @@ import {
   ShoppingBag,
   ExternalLink,
   Shield,
+  Image as ImageIcon,
 } from "lucide-react";
 
 export default function AdminLayout({
@@ -27,7 +28,7 @@ export default function AdminLayout({
                 Admin Galeri
               </span>
               <span className="block text-[10px] text-sand/60 tracking-wider uppercase">
-                Sewa Adat Nusantara
+                Sewa Baju Bodo
               </span>
             </div>
           </div>
@@ -56,6 +57,14 @@ export default function AdminLayout({
             >
               <Shirt className="w-4 h-4 text-gold-medium" />
               <span>Katalog & Stok Unit</span>
+            </Link>
+
+            <Link
+              href="/admin/images"
+              className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg text-sand hover:bg-cream-100/10 hover:text-ivory transition-colors"
+            >
+              <ImageIcon className="w-4 h-4 text-gold-medium" />
+              <span>Manajemen Gambar</span>
             </Link>
           </nav>
         </div>

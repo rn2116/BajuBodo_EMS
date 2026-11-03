@@ -156,3 +156,24 @@ model AdminUser {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+enum WebsiteImageLocation {
+  HERO
+  BANNER
+  CATEGORY
+  DECORATIVE
+}
+
+model WebsiteImage {
+  id        String                @id @default(cuid())
+  name      String                // Label mudah dipahami, misal "Hero Halaman Beranda"
+  url       String                // Path penyimpanan file, misal "/uploads/website-images/hero.jpg"
+  location  WebsiteImageLocation  // Lokasi penggunaan gambar pada website client
+  isActive  Boolean               @default(true) // Apakah gambar ini sedang digunakan/tampil
+  costumeId String?               // Opsi: ID kostum terkait jika gambar adalah gambar kategori/kostum
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+
+  @@index([location])
+  @@index([isActive])
+}

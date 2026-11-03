@@ -15,9 +15,9 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Sewa Adat Nusantara | Penyewaan Baju Adat Indonesia Elegan & Higienis",
+  title: "Sewa Baju Bodo | Penyewaan Pakaian Adat Bugis Elegan & Higienis",
   description:
-    "Layanan penyewaan baju adat Nusantara terlengkap, profesional, dan higienis. Koleksi busana adat Minangkabau, Jawa Solo & Jogja, Bali Payas Agung, Bugis Makassar, Dayak, dan Aceh dengan aksesoris lengkap.",
+    "Layanan penyewaan Baju Bodo adat Bugis-Makassar terlengkap, profesional, dan higienis. Koleksi pakaian adat Bugis dengan aksesoris lengkap (saloko, kutu-kutu, gelang panto, dan sarung Lipa Sabbe) siap pakai untuk pernikahan, wisuda, dan upacara adat.",
 };
 
 export default function RootLayout({

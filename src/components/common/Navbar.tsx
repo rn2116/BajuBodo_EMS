@@ -3,16 +3,25 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, Sparkles, MessageCircle, ShieldCheck } from "lucide-react";
+import { getSiteConfig, getWhatsAppUrl } from "@/lib/config";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const siteConfig = getSiteConfig();
+
+  const waConsultationUrl = siteConfig.whatsappNumber
+    ? getWhatsAppUrl(
+        siteConfig.whatsappNumber,
+        "Halo Admin Sewa Baju Bodo, saya ingin tanya ketersediaan pakaian adat."
+      )
+    : "";
 
   return (
     <header className="sticky top-0 z-40 bg-ivory/90 backdrop-blur-md border-b border-sand">
       {/* Top micro announcement bar */}
       <div className="bg-umber text-ivory-100 text-xs py-1.5 px-4 text-center tracking-wide font-medium flex items-center justify-center gap-2">
         <Sparkles className="w-3.5 h-3.5 text-gold-medium" />
-        <span>Penyewaan Baju Adat Nusantara Terlengkap — Seluruh Busana Higienis & Siap Pakai</span>
+        <span>Penyewaan Baju Bodo Adat Bugis Terlengkap — Seluruh Pakaian Higienis & Siap Pakai</span>
         <span className="hidden md:inline text-sand">|</span>
         <span className="hidden md:inline-flex items-center gap-1 text-gold-light">
           <ShieldCheck className="w-3.5 h-3.5" /> Garansi Bersih & Terawat
@@ -27,10 +36,10 @@ export function Navbar() {
           </div>
           <div>
             <span className="block font-serif text-xl font-bold tracking-tight text-umber group-hover:text-gold-dark transition-colors">
-              Sewa Adat
+              Sewa Baju Bodo
             </span>
             <span className="block text-[11px] uppercase tracking-widest text-taupe font-medium -mt-1">
-              Nusantara Heritage
+              Pakaian Adat Bugis
             </span>
           </div>
         </Link>
@@ -47,13 +56,13 @@ export function Navbar() {
             href="/katalog"
             className="text-sm font-medium text-umber hover:text-gold-dark transition-colors"
           >
-            Katalog Baju Adat
+            Katalog Baju Bodo & Adat
           </Link>
           <Link
             href="/katalog?kategori=PASANGAN"
             className="text-sm font-medium text-umber hover:text-gold-dark transition-colors"
           >
-            Set Pasangan
+            Set Pasangan Pengantin
           </Link>
           <Link
             href="/kontak"
@@ -65,15 +74,25 @@ export function Navbar() {
 
         {/* Right CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <a
-            href="https://wa.me/6281234567890?text=Halo%20Admin%20Sewa%20Adat%20Nusantara,%20saya%20ingin%20tanya%20ketersediaan%20baju%20adat"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-md border border-gold text-umber hover:bg-gold-light/60 transition-colors"
-          >
-            <MessageCircle className="w-4 h-4 text-gold-dark" />
-            Konsultasi WhatsApp
-          </a>
+          {waConsultationUrl ? (
+            <a
+              href={waConsultationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-md border border-gold text-umber hover:bg-gold-light/60 transition-colors"
+            >
+              <MessageCircle className="w-4 h-4 text-gold-dark" />
+              Konsultasi WhatsApp
+            </a>
+          ) : (
+            <button
+              disabled
+              className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-md border border-sand text-taupe/40 bg-ivory"
+            >
+              <MessageCircle className="w-4 h-4 text-gold-dark" />
+              Konsultasi WhatsApp
+            </button>
+          )}
 
           <Link
             href="/katalog"
@@ -109,7 +128,7 @@ export function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 text-base font-medium text-umber rounded-md hover:bg-cream"
           >
-            Katalog Baju Adat
+            Katalog Baju Bodo & Adat
           </Link>
           <Link
             href="/katalog?kategori=PASANGAN"
@@ -126,15 +145,25 @@ export function Navbar() {
             Kontak & Lokasi Galeri
           </Link>
           <div className="pt-2 border-t border-sand flex flex-col gap-2">
-            <a
-              href="https://wa.me/6281234567890?text=Halo%20Admin%20Sewa%20Adat%20Nusantara,%20saya%20ingin%20tanya%20ketersediaan%20baju%20adat"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 text-sm font-semibold py-2.5 rounded-md border border-gold text-umber"
-            >
-              <MessageCircle className="w-4 h-4 text-gold-dark" />
-              Tanya via WhatsApp
-            </a>
+            {waConsultationUrl ? (
+              <a
+                href={waConsultationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 text-sm font-semibold py-2.5 rounded-md border border-gold text-umber"
+              >
+                <MessageCircle className="w-4 h-4 text-gold-dark" />
+                Tanya via WhatsApp
+              </a>
+            ) : (
+              <button
+                disabled
+                className="flex items-center justify-center gap-2 text-sm font-semibold py-2.5 rounded-md border border-sand text-taupe/40 bg-ivory"
+              >
+                <MessageCircle className="w-4 h-4 text-gold-dark" />
+                Tanya via WhatsApp
+              </button>
+            )}
           </div>
         </div>
       )}

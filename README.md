@@ -1,4 +1,4 @@
-# BajuBodo EMS — Sistem Manajemen & Penyewaan Pakaian Adat Nusantara
+# BajuBodo EMS — Sistem Manajemen & Penyewaan Pakaian Adat Baju Bodo
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Strict-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
@@ -6,7 +6,7 @@
 [![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=flat&logo=prisma)](https://www.prisma.io/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 
-Platform digital terintegrasi untuk layanan penyewaan dan manajemen operasional busana adat Nusantara (seperti Baju Bodo khas Bugis-Makassar, adat Minang, Jawa, Bali, dan daerah lainnya) dengan pendekatan arsitektur modern, performa tinggi, dan estetika warisan budaya Indonesia.
+Platform digital terintegrasi untuk layanan penyewaan dan manajemen operasional pakaian adat Baju Bodo khas Bugis-Makassar (serta adat Minang, Jawa, Bali, dan daerah lainnya) dengan pendekatan arsitektur modern, performa tinggi, dan estetika warisan budaya Indonesia.
 
 ---
 
@@ -24,7 +24,7 @@ Platform digital terintegrasi untuk layanan penyewaan dan manajemen operasional 
 
 ## 🏛️ Latar Belakang & Visi
 
-Penyewaan busana adat Nusantara membutuhkan ketelitian inventaris fisik yang tinggi: satu model baju adat memiliki berbagai ukuran, kelengkapan aksesoris adat (bando, mahkota/saloko, gelang, kalung, pending), dan jadwal sewa yang rentan bentrok jika tidak diperhitungkan waktu pencucian/laundry. 
+Penyewaan pakaian adat Baju Bodo membutuhkan ketelitian inventaris fisik yang tinggi: satu model pakaian adat memiliki berbagai ukuran, kelengkapan aksesoris adat (bando, mahkota/saloko, gelang, kalung, pending), dan jadwal sewa yang rentan bentrok jika tidak diperhitungkan waktu pencucian/laundry. 
 
 **BajuBodo EMS** dirancang untuk:
 - Memudahkan calon penyewa menjelajahi katalog busana adat autentik dan melakukan pemesanan secara transparan.
@@ -40,7 +40,7 @@ Desain mengusung estetika warisan budaya Indonesia yang bersahaja, hangat, dan k
 - **Canvas Utama (Ivory / Putih Gading - `#FAF8F5`)**: Menggambarkan kehangatan kain tenun dan sutra alam, nyaman di mata.
 - **Surface / Card (Krem Lembut - `#F3EFEA`)**: Kontras lembut untuk kartu katalog dan panel formulir.
 - **Teks Utama (Deep Umber / Cokelat Tua - `#241A14`)**: Tingkat keterbacaan tinggi yang memenuhi standar aksesibilitas WCAG AAA.
-- **Aksen Kehormatan (Royal Antique Gold - `#C59A45`)**: Menonjolkan elemen interaktif, lencana unggulan, dan aksen khas busana adat kerajaan Nusantara.
+- **Aksen Kehormatan (Royal Antique Gold - `#C59A45`)**: Menonjolkan elemen interaktif, lencana unggulan, dan aksen khas busana adat kerajaan Indonesia.
 
 ### 2. *Anti-Slop Quality Standard*
 - **Konten Nyata**: Dilarang menggunakan *Lorem Ipsum*. Seluruh nama pakaian, asal daerah, dan aksesoris menggunakan data adat yang akurat.
@@ -56,7 +56,7 @@ Desain mengusung estetika warisan budaya Indonesia yang bersahaja, hangat, dan k
 | :--- | :--- | :--- |
 | **Framework** | [Next.js 14](https://nextjs.org/) (App Router) | React Server Components, server actions, dan rendering optimal |
 | **Language** | [TypeScript](https://www.typescriptlang.org/) | Strict type-safety, dilarang `any`, pencegahan error sejak kompilasi |
-| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | Utilitas desain sistem berbasis token warna budaya Nusantara |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) | Utilitas desain sistem berbasis token warna budaya Indonesia |
 | **Database** | [PostgreSQL](https://www.postgresql.org/) | Relational database untuk transaksi sewa dan inventaris terstruktur |
 | **ORM** | [Prisma ORM](https://www.prisma.io/) | Schema modelling, migrasi database, dan type-safe database client |
 | **Validation** | [Zod v4](https://zod.dev/) | Skema validasi input form dan data mutasi di sisi server |
@@ -168,7 +168,7 @@ DATABASE_URL="postgresql://user:password@localhost:5432/ems_baju_adat?schema=pub
 ADMIN_SECRET="ganti-dengan-rahasia-admin-yang-kuat-minimal-32-karakter"
 
 # Public Configuration
-NEXT_PUBLIC_SITE_NAME="Sewa Adat Nusantara"
+NEXT_PUBLIC_SITE_NAME="Sewa Baju Bodo"
 NEXT_PUBLIC_WHATSAPP_NUMBER="6281234567890"
 NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 ```
@@ -216,4 +216,4 @@ Setiap pengembang yang berkontribusi pada proyek ini wajib mematuhi standar beri
 
 ---
 
-**BajuBodo EMS** — *Melestarikan Keagungan Budaya Nusantara Melalui Teknologi Modern.*
+**BajuBodo EMS** — *Melestarikan Keagungan Budaya Indonesia Melalui Teknologi Modern.*

@@ -13,11 +13,11 @@ export function Footer() {
                 <span className="font-serif text-lg font-bold text-gold-medium">SA</span>
               </div>
               <span className="font-serif text-xl font-bold text-ivory-50 tracking-wide">
-                Sewa Adat Nusantara
+                Sewa Baju Bodo
               </span>
             </div>
             <p className="text-xs text-sand/80 leading-relaxed">
-              Melestarikan keagungan busana adat Nusantara dengan layanan penyewaan profesional,
+              Melestarikan keagungan Baju Bodo adat Bugis-Makassar dengan layanan penyewaan profesional,
               higienis, dan terpercaya untuk momen pernikahan, wisuda, upacara adat, serta sesi foto sakral.
             </p>
             <div className="flex items-center gap-2 text-xs text-gold-medium">
@@ -89,7 +89,7 @@ export function Footer() {
             <div className="space-y-2.5 text-xs text-sand/80">
               <div className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-gold-medium shrink-0 mt-0.5" />
-                <span>Galeri Budaya Nusantara, Jl. Cempaka Putih Raya No. 45, Jakarta Pusat</span>
+                <span>Galeri Baju Bodo, Jl. Cempaka Putih Raya No. 45, Jakarta Pusat</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-gold-medium shrink-0" />
@@ -105,7 +105,7 @@ export function Footer() {
 
         {/* Bottom copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-sand/60 gap-4">
-          <p>© {new Date().getFullYear()} Sewa Adat Nusantara. Seluruh Hak Cipta Dilindungi.</p>
+          <p>© {new Date().getFullYear()} Sewa Baju Bodo. Seluruh Hak Cipta Dilindungi.</p>
           <div className="flex items-center gap-6">
             <Link href="/kontak" className="hover:text-gold-light transition-colors">
               Kebijakan Sewa & Deposit

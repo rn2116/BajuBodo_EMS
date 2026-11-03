@@ -8,14 +8,17 @@ import {
   HelpCircle,
   Sparkles,
 } from "lucide-react";
+import { getSiteConfig } from "@/lib/config";
 
 export const metadata = {
-  title: "Kontak & Kebijakan Sewa | Sewa Adat Nusantara",
+  title: "Kontak & Kebijakan Sewa | Sewa Baju Bodo",
   description:
-    "Hubungi galeri Sewa Adat Nusantara. Pelajari lokasi galeri, panduan fitting baju adat, dan aturan deposit pengembalian.",
+    "Hubungi galeri Sewa Baju Bodo. Pelajari lokasi galeri, panduan fitting pakaian adat, dan aturan deposit pengembalian.",
 };
 
 export default function ContactPage() {
+  const siteConfig = getSiteConfig();
+
   const faqs = [
     {
       q: "Berapa lama standar durasi penyewaan?",
@@ -82,14 +85,20 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <span className="block font-semibold text-umber">Telepon & WhatsApp:</span>
-                  <a
-                    href="https://wa.me/6281234567890"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gold-deep hover:underline font-mono text-xs font-semibold block mt-0.5"
-                  >
-                    +62 812-3456-7890 (Layanan Konsultasi Cepat)
-                  </a>
+                  {siteConfig.whatsappNumber ? (
+                    <a
+                      href={`https://wa.me/${siteConfig.whatsappNumber}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gold-deep hover:underline font-mono text-xs font-semibold block mt-0.5"
+                    >
+                      +62 812-3456-7890 (Layanan Konsultasi Cepat)
+                    </a>
+                  ) : (
+                    <span className="text-taupe/40 font-mono text-xs font-semibold block mt-0.5">
+                      Nomor WhatsApp belum dikonfigurasi
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -119,15 +128,27 @@ export default function ContactPage() {
             </div>
 
             <div className="pt-4 border-t border-sand">
-              <a
-                href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20ingin%20jadwalkan%20fitting%20baju%20adat%20di%20galeri"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1EBE5D] text-white py-3.5 px-6 rounded-xl font-semibold text-xs tracking-wide shadow-md transition-colors"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Jadwalkan Kunjungan Fitting via WhatsApp</span>
-              </a>
+              {siteConfig.whatsappNumber ? (
+                <a
+                  href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
+                    "Halo Admin, saya ingin jadwalkan fitting baju adat di galeri"
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1EBE5D] text-white py-3.5 px-6 rounded-xl font-semibold text-xs tracking-wide shadow-md transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Jadwalkan Kunjungan Fitting via WhatsApp</span>
+                </a>
+              ) : (
+                <button
+                  disabled
+                  className="w-full inline-flex items-center justify-center gap-2 bg-[#25D366]/40 text-white py-3.5 px-6 rounded-xl font-semibold text-xs tracking-wide shadow-md"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Jadwalkan Kunjungan Fitting via WhatsApp</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

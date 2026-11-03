@@ -6,6 +6,7 @@ import { formatRupiah, formatDateIndo } from "@/lib/utils";
 import { calculateRentalBreakdown } from "@/features/booking/availability";
 import { addDays, format, parseISO, differenceInCalendarDays } from "date-fns";
 import { Calendar, ShieldCheck, CheckCircle2, MessageCircle, AlertCircle } from "lucide-react";
+import { getSiteConfig, getWhatsAppUrl } from "@/lib/config";
 
 interface BookingFormProps {
   costume: Costume;
@@ -67,8 +68,11 @@ export function BookingForm({ costume }: BookingFormProps) {
     setIsSuccess(true);
   };
 
+  const siteConfig = getSiteConfig();
+
   const getWhatsAppBookingLink = () => {
-    const text = `*FORMULIR PENYEWAAN BAJU ADAT*
+    const productUrl = `${siteConfig.siteUrl}/katalog/${costume.slug}`;
+    const text = `*FORMULIR PENYEWAAN BAJU BODO*
 ----------------------------------------
 *Kode Pesanan:* ${bookingCode}
 *Pakaian:* ${costume.title}
@@ -88,9 +92,16 @@ export function BookingForm({ costume }: BookingFormProps) {
 ----------------------------------------
 *Catatan:* ${customerNotes || "Tidak ada"}
 
-Halo Admin Sewa Adat Nusantara, saya ingin konfirmasi ketersediaan dan pembayaran DP untuk pesanan di atas. Terima kasih!`;
+Halo Admin Sewa Baju Bodo, saya ingin konfirmasi ketersediaan dan pembayaran DP untuk pesanan di atas. Terima kasih!
 
-    return `https://wa.me/6281234567890?text=${encodeURIComponent(text)}`;
+Detail produk: ${productUrl}`;
+
+    if (!siteConfig.whatsappNumber) {
+      console.error("NEXT_PUBLIC_WHATSAPP_NUMBER belum dikonfigurasi di environment variable.");
+      return "";
+    }
+
+    return getWhatsAppUrl(siteConfig.whatsappNumber, text);
   };
 
   if (isSuccess) {
@@ -101,11 +112,12 @@ Halo Admin Sewa Adat Nusantara, saya ingin konfirmasi ketersediaan dan pembayara
             <CheckCircle2 className="w-8 h-8" />
           </div>
           <h3 className="font-serif text-2xl font-bold text-umber">
-            Permohonan Sewa Berhasil Dibuat
+            Permintaan Sewa Siap Dikirim via WhatsApp
           </h3>
           <p className="text-xs text-taupe max-w-md mx-auto">
-            Slot pakaian adat Anda telah disiapkan. Silakan klik tombol di bawah untuk meneruskan
-            rincian pesanan ke WhatsApp Admin kami guna verifikasi dan instruksi DP.
+            Rincian pemesanan Anda telah siap. Silakan klik tombol di bawah untuk membuka WhatsApp
+            Admin dan mengirim permintaan sewa. Konfirmasi ketersediaan, pembayaran DP, dan penentuan
+            jadwal dilakukan secara langsung dengan pemilik di luar website (tidak ada pembayaran online).
           </p>
         </div>
 

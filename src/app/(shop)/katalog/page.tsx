@@ -10,9 +10,9 @@ interface CatalogPageProps {
 }
 
 export const metadata = {
-  title: "Katalog Baju Adat Nusantara | Sewa Adat Nusantara",
+  title: "Katalog Baju Bodo & Adat | Sewa Baju Bodo",
   description:
-    "Eksplorasi koleksi busana adat lengkap dari berbagai daerah Indonesia. Minangkabau, Jawa, Bali, Bugis, Dayak, Aceh, dan Batak dengan kualitas higienis dan aksesoris lengkap.",
+    "Eksplorasi koleksi pakaian adat lengkap dari berbagai daerah Indonesia, termasuk Baju Bodo khas Bugis-Makassar. Kualitas higienis dan aksesoris lengkap.",
 };
 
 export default function CatalogPage({ searchParams }: CatalogPageProps) {
@@ -25,10 +25,10 @@ export default function CatalogPage({ searchParams }: CatalogPageProps) {
       <div className="space-y-2 border-b border-sand pb-6">
         <div className="flex items-center gap-2 text-xs font-semibold text-gold-deep tracking-wider uppercase">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Katalog Lengkap Adat Nusantara</span>
+          <span>Katalog Lengkap Baju Bodo & Adat</span>
         </div>
         <h1 className="font-serif text-3xl sm:text-4xl font-extrabold text-umber">
-          Koleksi Baju Adat Indonesia
+          Koleksi Baju Bodo & Pakaian Adat
         </h1>
         <p className="text-xs sm:text-sm text-taupe max-w-2xl leading-relaxed">
           Pilih busana tradisional dengan kemegahan tenun dan songket otentik.

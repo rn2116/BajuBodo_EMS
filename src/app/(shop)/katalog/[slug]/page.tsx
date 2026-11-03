@@ -6,6 +6,7 @@ import { BookingForm } from "@/components/booking/BookingForm";
 import { ProductCard } from "@/components/catalog/ProductCard";
 import { Badge } from "@/components/ui/Badge";
 import { formatRupiah } from "@/lib/utils";
+import { getSiteConfig, getWhatsAppUrl } from "@/lib/config";
 import {
   ChevronRight,
   Sparkles,
@@ -13,6 +14,7 @@ import {
   Info,
   Layers,
   HelpCircle,
+  MessageCircle,
 } from "lucide-react";
 
 interface CostumeDetailPageProps {
@@ -32,13 +34,14 @@ export function generateMetadata({ params }: CostumeDetailPageProps) {
   if (!costume) return { title: "Busana Tidak Ditemukan" };
 
   return {
-    title: `${costume.title} - Sewa Baju Adat Nusantara`,
+    title: `${costume.title} - Sewa Baju Bodo`,
     description: costume.description,
   };
 }
 
 export default function CostumeDetailPage({ params }: CostumeDetailPageProps) {
   const costume = COSTUMES.find((c) => c.slug === params.slug);
+  const siteConfig = getSiteConfig();
 
   if (!costume) {
     notFound();
@@ -175,7 +178,7 @@ export default function CostumeDetailPage({ params }: CostumeDetailPageProps) {
               Panduan Ukuran Busana Adat
             </h3>
             <p className="text-taupe leading-relaxed">
-              Sebagian besar pakaian adat Nusantara menggunakan sistem lilitan kain songket/jarik serta
+              Sebagian besar pakaian adat Indonesia menggunakan sistem lilitan kain songket/jarik serta
               manset beludru fleksibel. Jika ragu dengan ukuran tubuh Anda:
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 font-mono text-center">
@@ -201,6 +204,25 @@ export default function CostumeDetailPage({ params }: CostumeDetailPageProps) {
 
         {/* Right Column: Sticky Booking Form */}
         <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
+          {/* Tombol Sewa via WhatsApp (langsung chat pemilik tanpa pembayaran online) */}
+          <div className="space-y-2">
+            <span className="text-[10px] uppercase tracking-widest font-semibold text-taupe">
+              Konsultasi & Pemesanan
+            </span>
+            <a
+              href={getWhatsAppUrl(
+                siteConfig.whatsappNumber,
+                `Halo, saya tertarik menyewa Baju Bodo ${costume.title}. Apakah produk ini tersedia untuk tanggal penyewaan yang saya inginkan?\n\nDetail produk: ${siteConfig.siteUrl}/katalog/${costume.slug}`
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1EBE5D] text-white py-3.5 px-6 rounded-xl font-semibold text-sm shadow-md transition-colors"
+            >
+              <MessageCircle className="w-5 h-5" />
+              <span>Sewa via WhatsApp</span>
+            </a>
+          </div>
+
           <BookingForm costume={costume} />
 
           {/* Quick Consultation helper */}
@@ -209,16 +231,25 @@ export default function CostumeDetailPage({ params }: CostumeDetailPageProps) {
               <HelpCircle className="w-4 h-4 text-gold-dark shrink-0" />
               <span>Butuh custom fitting atau sewa rombongan?</span>
             </div>
-            <a
-              href={`https://wa.me/6281234567890?text=${encodeURIComponent(
-                `Halo Admin, saya ingin tanya sewa rombongan untuk baju: ${costume.title}`
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-gold-deep hover:underline shrink-0"
-            >
-              Chat Tim Ahli
-            </a>
+            {siteConfig.whatsappNumber ? (
+              <a
+                href={`https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
+                  `Halo Admin, saya ingin tanya sewa rombongan untuk baju: ${costume.title}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-gold-deep hover:underline shrink-0"
+              >
+                Chat Tim Ahli
+              </a>
+            ) : (
+              <button
+                disabled
+                className="font-semibold text-taupe/40 hover:underline shrink-0"
+              >
+                Chat Tim Ahli
+              </button>
+            )}
           </div>
         </div>
       </div>
